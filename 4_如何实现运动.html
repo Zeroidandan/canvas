@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>canvas如何实现运动</title>
+    <style>
+        canvas {
+            border: 1px solid #000;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="canvas" width="600" height="500"></canvas>
+
+    <script>
+        // 得到画布
+        var canvas = document.getElementById('canvas');
+        // 渲染上下文
+        var ctx = canvas.getContext('2d');
+
+        // 圆心横坐标
+        var x = 30;
+        setInterval(function () {
+            // 横坐标变化
+            x++;
+
+            // 清屏
+            ctx.clearRect(0, 0, 600, 500);
+
+            // 绘制圆
+            ctx.beginPath();
+            ctx.arc(x, 150, 30, 0, Math.PI * 2, true);
+            ctx.fillStyle = 'green';
+            ctx.fill();
+        }, 20);
+    </script>
+</body>
+
+</html>

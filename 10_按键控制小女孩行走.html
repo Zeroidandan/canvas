@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>按键控制小女孩行走</title>
+    <style>
+        canvas {
+            border: 1px solid #000;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="canvas" width="800" height="600"></canvas>
+    <script>
+        var canvas = document.getElementById('canvas');
+        var ctx = canvas.getContext('2d');
+
+        function Girl() {
+            this.x = 200;
+            this.y = 100;
+            this.step = 0;
+            // 是否行走
+            this.isRun = false;
+            // 方向,0-前。1-左，2-右，3-后
+            this.direction = 2;
+        }
+
+        Girl.prototype.update = function () {
+            if (this.isRun) {
+                if (this.direction == 0) {
+                    this.y++
+                } else if (this.direction == 1) {
+                    this.x--;
+                } else if (this.direction == 2) {
+                    this.x++;
+                } else if (this.direction == 3) {
+                    this.y--;
+                }
+
+                 // 帧编号是3的倍数，步子++
+                if (f % 3 == 0) {
+                    this.step++;
+                }
+                // 只有8帧
+                if (this.step > 7) {
+                    this.step = 0;
+                }
+            } 
+        }
+
+        Girl.prototype.rander = function () {
+            ctx.drawImage(img, 79 * this.step, 108 * this.direction, 79, 108, this.x, this.y, 79, 108);
+        }
+        // 行走
+        Girl.prototype.run = function () {
+            this.isRun = true;
+        }
+        // 停止
+        Girl.prototype.stop = function () {
+            this.isRun = false;
+            this.step = 0;
+        }
+        // 改变方向
+        Girl.prototype.changeDirection = function (d) {
+            this.direction = d;
+        }
+
+        // 产生一个实例
+        var alias = new Girl();
+        // 帧编号
+        var f = 0;
+
+        // 图片加载
+        var img = new Image();
+        img.onload = function () {
+            //定时器
+            setInterval(function () {
+                f++;
+                ctx.clearRect(0, 0, 800, 600);
+                // ctx.fillText(f, 20, 20);
+
+                // 调用
+                alias.update();
+                alias.rander();
+            }, 20);
+        }
+        img.src = 'images/girl.png';
+
+        // 键盘监听
+        document.onkeydown = function (e) {
+            if (e.keyCode == 37) {
+                alias.changeDirection(1);
+                alias.run();
+            } else if (e.keyCode == 38) {
+                alias.changeDirection(3);
+                alias.run();
+            } else if (e.keyCode == 39) {
+                alias.changeDirection(2);
+                alias.run();
+            } else if (e.keyCode == 40) {
+                alias.changeDirection(0);
+                alias.run();
+            }
+        }
+
+        document.onkeyup = function (e) {
+            if (e.keyCode >= 37 && e.keyCode <= 40) {
+                alias.stop();
+            }
+        }
+    </script>
+</body>
+
+</html>

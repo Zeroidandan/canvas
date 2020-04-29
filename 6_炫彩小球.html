@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>炫彩小球</title>
+    <style>
+        canvas {
+            background-color: black;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="canvas" width="800" height="600"></canvas>
+
+    <script>
+        // 得到画布，渲染上下文
+        var canvas = document.getElementById('canvas');
+        var ctx = canvas.getContext('2d');
+
+        // 小球颜色数组
+        var colorArr = ['#66CCCC', '#CCFF66', '#FF99CC', '#FF9900', '#CCFF00', '#66CCCC', '#FFFF66'];
+
+        function Ball(x, y) {
+            this.x = x;
+            this.y = y;
+            this.r = 10;
+            this.color = colorArr[parseInt(Math.random() * colorArr.length)];
+            this.opacity = 1;
+
+            // 小球x,y增量
+            do {
+                this.dx = parseInt(Math.random() * 8) - 4;
+                this.dy = parseInt(Math.random() * 8) - 4;
+            } while (this.dx == 0 && this.dy == 0);
+
+            // 把小球放进数组
+            ballArr.push(this);
+        }
+
+        // 更新
+        Ball.prototype.update = function () {
+            this.r += 0.1;
+            this.opacity -=0.01;
+            if (this.opacity <= 0) {
+                for (var i = 0; i < ballArr.length; i++) {
+                    if (ballArr[i] == this) {
+                        ballArr.splice(i, 1);
+                    }
+                }
+            }
+
+            this.x += this.dx;
+            this.y += this.dy;
+        }
+
+        // 渲染
+        Ball.prototype.rander = function () {
+            ctx.beginPath();
+            // ctx.beginPath();
+            ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2, true);
+            ctx.fillStyle = this.color;
+            // 保存当前
+            ctx.save();
+            // 改变透明度
+            ctx.globalAlpha = this.opacity;
+            ctx.fill();
+            // 回复 不影响其他的
+            ctx.restore();
+        }
+
+        // 帧编号
+        var f = 0;
+        // 小球数组
+        var ballArr = [];
+
+        // 定时器
+        setInterval(function () {
+            // 清空画布
+            ctx.clearRect(0, 0, 800, 600);
+
+            f++;
+            // 帧编号
+            ctx.font = '20px 宋体';
+            ctx.fillText(f, 10, 20);
+
+            for (let i = 0; i < ballArr.length; i++) {
+                ballArr[i].update();
+                ballArr[i] && ballArr[i].rander();
+            }
+
+        }, 20);
+
+        // 鼠标事件
+        canvas.onmousemove = function (e) {
+            new Ball(e.offsetX, e.offsetY);
+        }
+    </script>
+</body>
+
+</html>

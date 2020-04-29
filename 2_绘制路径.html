@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>绘制路径</title>
+    <style>
+        canvas {
+            border: 1px solid #000;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="canvas" width="500" height="500"></canvas>
+
+    <script>
+        // 渲染上下文
+        var canvas = document.getElementById('canvas');
+        var ctx = canvas.getContext('2d');
+
+        // 开始绘制路径
+        ctx.beginPath();
+        // 移动绘图点到100,100点
+        ctx.moveTo(50, 50);
+        // 绘制一条线
+        ctx.lineTo(50, 150);
+        // 再绘制一条线
+        ctx.lineTo(150, 150);
+        // 自动闭合
+        ctx.closePath();
+        // 改变线条的颜色
+        ctx.strokeStyle = 'green';
+        // 改变线条的宽度
+        ctx.lineWidth = 5;
+        // // 线条是虚拟的，我们必须真的让它绘制才行
+        ctx.stroke();
+        // 填充颜色
+        ctx.fillStyle = 'orange';
+        // 填充
+        ctx.fill();
+
+
+        // 再次绘制新的。不冲突
+        ctx.beginPath();
+        ctx.moveTo(100, 100);
+        ctx.lineTo(100, 200);
+        ctx.lineTo(200, 200);
+        ctx.lineTo(200, 100);
+        ctx.closePath();
+        ctx.strokeStyle = 'yellow';
+        ctx.stroke();
+        ctx.fillStyle = 'purple';
+        ctx.fill();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flappy Bird</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        canvas {
+            /* border: 1px solid #000; */
+            display: block;
+            margin: 40px auto;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="canvas" width="480" height="640"></canvas>
+    <!-- 声音 -->
+    <audio src="music/FlappyBird-GameOver.mp3" id="over"></audio>
+    <audio src="music/FlappyBird-GetScore.mp3" id="getscore"></audio>
+    <audio src="music/FlappyBird-Strike.mp3" id="strike"></audio>
+    <audio src="music/FlappyBird-BirdFly.mp3" id="BirdFly"></audio>
+    <!-- 中介者模式 -->
+    <!-- 其他类都是在Game中实例化的 -->
+    <script src="js/Game.js"></script>
+    <script src="js/Land.js"></script>
+    <script src="js/Pipe.js"></script>
+    <script src="js/Bird.js"></script>
+    <script src="js/Score.js"></script>
+    <script src="js/GameOverScene.js"></script>
+
+    <script>
+        var game = new Game();
+    </script>
+</body>
+
+</html>

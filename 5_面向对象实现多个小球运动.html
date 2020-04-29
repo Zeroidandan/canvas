@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>面向对象实现多个小球运动</title>
+    <style>
+        canvas {
+            border: 1px solid #000;
+        }
+    </style>
+</head>
+
+<body>
+    <button id="btn">点击出现小球</button>
+    <canvas id="canvas" width="600" height="400"></canvas>
+
+    <script>
+        // 渲染上下文
+        var canvas = document.getElementById('canvas');
+        var ctx = canvas.getContext('2d');
+
+        // 球类
+        function Ball(x, y, r, color, speed) {
+            this.x = x;
+            this.y = y;
+            this.r = r;
+            this.color = color;
+            this.speed = speed;
+            // 在new出小球的时候，要自动的把小球放入到小球数组中
+            ballArr.push(this);
+        }
+
+        // 小球的更新
+        Ball.prototype.update = function () {
+            this.x += this.speed;
+        }
+
+        // 小球的渲染
+        Ball.prototype.rander = function () {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2, true);
+            ctx.fillStyle = this.color;
+            ctx.fill();
+        }
+
+        //帧编号
+        var f = 0;
+        // 
+        var ballArr = [];
+        // 得到按钮
+        var btn = document.getElementById('btn');
+        btn.onclick = function () {
+            new Ball(20, 150, 20, 'purple', 2);
+        }
+
+
+        // 定时器
+        setInterval(function () {
+            //清屏
+            ctx.clearRect(0, 0, 600, 400);
+
+            f++;
+            //帧编号
+            ctx.font = '20px 微软雅黑';
+            ctx.fillText(f, 0, 20);
+
+
+            for (let i = 0; i < ballArr.length; i++) {
+                ballArr[i].update();
+                ballArr[i].rander();
+            }
+        }, 20);
+    </script>
+</body>
+
+</html>

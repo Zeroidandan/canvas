@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>绘制弧</title>
+    <style>
+        canvas{
+            border: 1px solid #000;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="500" height="500"></canvas>
+
+    <script>
+        // 渲染上下文
+        var canvas = document.getElementById('canvas');
+        var ctx = canvas.getContext('2d');
+
+         // 绘制弧
+         ctx.beginPath();
+        // ctx.arc(50,50,50,0,2,true);
+        ctx.arc(50,50,50,0,2,false);
+        ctx.stroke();
+
+        // 绘制圆
+        ctx.beginPath();
+        ctx.arc(150,150,50,0,Math.PI*2,true);
+        ctx.stroke();
+        ctx.fillStyle = 'blue';
+        ctx.fill();
+
+        // 同心圆
+        for (var i = 0; i < 20; i++) {
+            ctx.beginPath();
+            ctx.arc(350,350,20+i*5,0,Math.PI*2,true);
+            ctx.stroke();
+        }
+    </script>
+</body>
+</html>
